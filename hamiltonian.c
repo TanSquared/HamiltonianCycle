@@ -3,6 +3,7 @@
 
 void printarray(int *nc, int size)
 {
+    //nc is the solution array
     printf("A possible cycle is\n[");
     int i;
     for(i = 0; i < size-1; i++)
@@ -15,6 +16,8 @@ void printarray(int *nc, int size)
 
 void nodemark(int **g, int *n, int size, int i)
 {
+    //n is the solution aray and g is the graph
+    //This function marks each value in the solution array
     *(n + i) = ((*(n + i)) + 1)%(size + 1);
     if(*(n + i) == 0)
     {
@@ -22,14 +25,14 @@ void nodemark(int **g, int *n, int size, int i)
     }
     int pos = *(n + i) - 1;
     int prevpos = *(n + i - 1) - 1;
-    if(*((*(g + pos)) + prevpos) == 0)
+    if(*((*(g + pos)) + prevpos) == 0)  //Checks if consecutive positions are connected
     {
         nodemark(g, n, size, i);
         return;
     }
     for(int j = 0; j < size; j++)
     {
-        if(i != j && *(n + i) == *(n + j))
+        if(i != j && *(n + i) == *(n + j))  //Checks if there are any repeating values in the solution array
         {
             nodemark(g, n, size, i);
             return;
@@ -38,7 +41,7 @@ void nodemark(int **g, int *n, int size, int i)
 
     if (i == size - 1)
     {
-        if(*((*(g + pos))) == 1)
+        if(*((*(g + pos))) == 1)    //Checks if last and first position are connected
             printarray(n, size);
         nodemark(g, n, size, i);
     }
@@ -52,7 +55,7 @@ void graph(int **g, int *n, int size)
         if(*(n + i) == 0)
         {
             if(i != 1)
-            i = i - 2;
+            i = i - 2;  //At this step we go back to the previous position. We subtract by 2 as for loop is going to add 1
             else
             break;
         }
