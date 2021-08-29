@@ -1,0 +1,43 @@
+Here I will try my best to explain the working of the code.
+
+Suppose we chose to have 4 nodes, then our solution array will have 4 values. Let the solution array be named sol_arr. We set the values of sol_arr initially as:
+sol_arr[] = {1, 0, 0, 0}
+The first value is 1 as cycle will start with the first node(arbitrarily chosen).
+Now there are 3 conditions that our solution array has to meet
+  1. Each consecutive point in solution array must be connected in the given graph
+  2. The last and first point must be connected in the given graph.
+  3. No value should be repeated in the array (as it wouldn't be a cycle then)
+
+Let the number of nodes be 4 and the given graph be
+0 1 0 1
+1 0 1 0
+0 1 0 1
+1 0 1 0
+We have taken this example just for understanding. In the code, the number of nodes and the adjacency matrix will be provided by the user as input, not hardcoded.
+
+Now we start filling the values in the array as follows:
+sol_arr[i] = (sol_arr[i] + i) mod (size + 1)  //here size is the number of nodes we have chosen
+Now the sol_arr becomes
+sol_arr[] = {1, 1, 0, 0}
+Now since the values repeat in the array, the formula is repeated again. Now our array becomes:
+sol_arr[] = {1, 2, 0, 0}
+As "1" and "2" are connected, our graph satisfies all properties till now and we proceed to 3rd value. 
+Applying the formula untill values are satisfied we get
+sol_arr[] = {1, 2, 3, 0}
+Again applying the formula for 4th value we get
+sol_arr[] = {1, 2, 3, 4}
+
+As we see, all conditions are satisfied, so our algorithm prints the solution array.
+BUT, remember that our work isn't done yet. We just checked for one configuration. There might be more possibilites left.
+Thus we, again repeat the array filling formula for last filled value(4th) and our sol_arr becomes
+sol_arr[] = {1, 2, 3, 0}
+
+Since we encounter 0 after applying our formula, our algorithm takes us one value(or position) back. This part is the "backtracking"
+sol_arr[] = {1, 2, 4, 0}
+As the consecutive positions (sol_arr[1] and sol_arr[2]) are disconnected, we apply the formula again
+
+After some steps, we reach
+sol_arr[] = {1, 0, 0, 0}
+As we reach 0 on the 2nd value, we stop our algorithm. There was only one solution.
+
+I encourage you to try out the code with different number of nodes and connections between them.
